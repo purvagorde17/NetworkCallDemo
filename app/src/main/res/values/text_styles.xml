@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Names.Header">
+        <item name="android:background">@color/gray</item>
+        <item name="android:textSize">15pt</item>
+    </style>
+
+    <style name="Names">
+        <item name="android:gravity">center</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">@color/material_blue_900</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">8pt</item>
+    </style>
+</resources>

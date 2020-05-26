@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<declare-styleable name="ds">
+    <attr name="backgroundView" format="color"/>
+    <attr name="albums_background" format="color"/>
+    <attr name="green_background" format="color"/>
+    <attr name="yellow_background" format="reference"/>
+    <attr name="light_pink_background" format="reference"/>
+    <attr name="light_blue" format="reference"/>
+</declare-styleable>
+</resources>
