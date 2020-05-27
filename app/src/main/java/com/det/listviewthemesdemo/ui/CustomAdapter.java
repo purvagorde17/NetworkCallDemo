@@ -1,6 +1,7 @@
 package com.det.listviewthemesdemo.ui;
 
-import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,23 +9,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.det.listviewthemesdemo.R;
-import com.det.listviewthemesdemo.model.Album;
-import com.det.listviewthemesdemo.model.Artist;
-import com.det.listviewthemesdemo.model.Header;
+import com.det.listviewthemesdemo.model.AlbumItem;
+import com.det.listviewthemesdemo.model.ArtistItem;
+import com.det.listviewthemesdemo.model.HeaderItem;
 import com.det.listviewthemesdemo.model.ListViewItem;
-import com.det.listviewthemesdemo.model.Track;
+import com.det.listviewthemesdemo.model.TrackItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomAdapter extends RecyclerView.Adapter
 {
+    Context context;
     List< ListViewItem > listViewItems;
 
-    public CustomAdapter( ArrayList< ListViewItem > listViewItems )
+    public CustomAdapter( Context context,ArrayList< ListViewItem > listViewItems )
+    {
+        this.context = context;
+        this.listViewItems = listViewItems;
+    }
+
+    public CustomAdapter( List< ListViewItem > listViewItems )
     {
         this.listViewItems = listViewItems;
     }
@@ -72,7 +81,7 @@ public class CustomAdapter extends RecyclerView.Adapter
         switch( listViewItems.get( position ).getListViewItemType().getValue() )
         {
             case 0:
-                Header header = ( Header ) listViewItems.get( position ).getListViewItem();
+                HeaderItem header = ( HeaderItem ) listViewItems.get( position ).getListViewItem();
                 ( ( HeaderViewHolder ) viewHolder ).setData( header );
                 ( ( HeaderViewHolder ) viewHolder ).header.setOnClickListener( new View.OnClickListener()
                 {
@@ -80,27 +89,30 @@ public class CustomAdapter extends RecyclerView.Adapter
                     public void onClick( View view )
                     {
                         if(((TextView)view).getText().equals( "Artist" )){
-                            Log.d( "###","artist" );
+                            Intent intent = new Intent( "action.OPEN_ARTIST" );
+                            LocalBroadcastManager.getInstance(context).sendBroadcast( intent );
                         }
                         if(((TextView)view).getText().equals( "Albums" )){
-                            Log.d( "###","album" );
+                            Intent intent = new Intent( "action.OPEN_ALBUM" );
+                            LocalBroadcastManager.getInstance(context).sendBroadcast( intent );
                         }
                         if(((TextView)view).getText().equals( "Tracks" )){
-                            Log.d( "###","track" );
+                            Intent intent = new Intent( "action.OPEN_TRACK" );
+                            LocalBroadcastManager.getInstance(context).sendBroadcast( intent );
                         }
                     }
                 } );
                 break;
             case 1:
-                Album album = ( Album ) listViewItems.get( position ).getListViewItem();
+                AlbumItem album = ( AlbumItem ) listViewItems.get( position ).getListViewItem();
                 ( ( AlbumsViewHolder ) viewHolder ).setData( album );
                 break;
             case 2:
-                Track track = ( Track ) listViewItems.get( position ).getListViewItem();
+                TrackItem track = ( TrackItem ) listViewItems.get( position ).getListViewItem();
                 ( ( TracksViewHolder ) viewHolder ).setData( track );
                 break;
             case 3:
-                Artist artist = ( Artist ) listViewItems.get( position ).getListViewItem();
+                ArtistItem artist = ( ArtistItem ) listViewItems.get( position ).getListViewItem();
                 ( ( ArtistViewHolder ) viewHolder ).setData( artist );
                 break;
         }
@@ -118,7 +130,7 @@ public class CustomAdapter extends RecyclerView.Adapter
             header = view.findViewById( R.id.headertext );
         }
 
-        public void setData( Header header )
+        public void setData( HeaderItem header )
         {
             this.header.setText( header.getHeader() );
         }
@@ -127,63 +139,63 @@ public class CustomAdapter extends RecyclerView.Adapter
   private class ArtistViewHolder extends RecyclerView.ViewHolder
     {
         ImageView artistImage;
-        TextView artistName, song;
+        TextView artistName;
 
         public ArtistViewHolder( View view )
         {
             super( view );
             artistImage = view.findViewById( R.id.artistImageView );
             artistName = view.findViewById( R.id.artistName );
-            song = view.findViewById( R.id.song );
+
         }
 
-        public void setData( Artist artist )
+        public void setData( ArtistItem artist )
         {
             artistImage.setImageResource( artist.getArtistImageView() );
             artistName.setText( artist.getArtistName() );
-            song.setText( artist.getSong() );
+
         }
     }
 
    private class TracksViewHolder extends RecyclerView.ViewHolder
     {
         ImageView trackImage;
-        TextView trackName, trackDesc;
+        TextView trackName, trackArtist;
 
         public TracksViewHolder( View view )
         {
             super( view );
             trackImage = view.findViewById( R.id.tracksImageView );
             trackName = view.findViewById( R.id.tracksName );
-            trackDesc = view.findViewById( R.id.tracksDesc );
+            trackArtist = view.findViewById( R.id.artistName );
         }
 
-        public void setData( Track track )
+        public void setData( TrackItem track )
         {
             trackImage.setImageResource( track.getTracksImageView() );
             trackName.setText( track.getTrackName() );
-            trackDesc.setText( track.getTrackDesc() );
+            trackArtist.setText( track.getTrackArtist() );
         }
     }
 
     private class AlbumsViewHolder extends RecyclerView.ViewHolder
     {
         ImageView albumImage;
-        TextView albumName, albumDesc;
+        TextView albumName;
 
         public AlbumsViewHolder( View view )
         {
             super( view );
             albumImage = view.findViewById( R.id.albumImageView );
             albumName = view.findViewById( R.id.albumName );
-            albumDesc = view.findViewById( R.id.albumDesc );
+
         }
 
-        public void setData( Album album )
+        public void setData( AlbumItem album )
         {
             albumImage.setImageResource( album.getAlbumImage() );
             albumName.setText( album.getAlbumName() );
-            albumDesc.setText( album.getDesc() );
+
         }
     }
 }
@@ -286,7 +298,7 @@ public class CustomAdapter extends RecyclerView.Adapter
 
                 tracksViewHolder.trackImage.setImageResource( track.getTracksImageView() );
                 tracksViewHolder.trackName.setText( track.getTrackName() );
-                tracksViewHolder.trackDesc.setText( track.getTrackDesc() );
+                tracksViewHolder.trackArtist.setText( track.getTrackDesc() );
                 return view;
 
             default:

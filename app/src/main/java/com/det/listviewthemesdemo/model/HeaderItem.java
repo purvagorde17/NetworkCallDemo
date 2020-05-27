@@ -1,10 +1,10 @@
 package com.det.listviewthemesdemo.model;
 
-public class Header
+public class HeaderItem
 {
     private String header;
 
-    public Header( String header )
+    public HeaderItem( String header )
     {
         this.header = header;
     }

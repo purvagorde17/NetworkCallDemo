@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.det.listviewthemesdemo.R;
-import com.det.listviewthemesdemo.model.Album;
-import com.det.listviewthemesdemo.model.Artist;
-import com.det.listviewthemesdemo.model.Header;
+import com.det.listviewthemesdemo.model.AlbumItem;
+import com.det.listviewthemesdemo.model.ArtistItem;
+import com.det.listviewthemesdemo.model.HeaderItem;
 import com.det.listviewthemesdemo.model.ItemType;
 import com.det.listviewthemesdemo.model.ListViewItem;
-import com.det.listviewthemesdemo.model.Track;
+import com.det.listviewthemesdemo.model.TrackItem;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class MainFragment extends Fragment
 
         setData();
 
-        CustomAdapter myAdapter = new CustomAdapter(  listViewItems );
+        CustomAdapter myAdapter = new CustomAdapter( getActivity().getApplicationContext(), listViewItems );
         recyclerView.setAdapter( myAdapter );
         recyclerView.setLayoutManager(
                 new LinearLayoutManager( getActivity()));
@@ -45,18 +45,18 @@ public class MainFragment extends Fragment
     private void setData()
     {
         listViewItems = new ArrayList<>();
-        listViewItems.add( new ListViewItem( new Header( "Artist" ), ItemType.HEADER ) );
-        listViewItems.add( new ListViewItem( new Artist( R.drawable.music, "A.R.Rehman", "Jay ho" ), ItemType.ARTIST ) );
-        listViewItems.add( new ListViewItem( new Artist( R.drawable.song, "Jubin", "Saware" ), ItemType.ARTIST ) );
-        listViewItems.add( new ListViewItem( new Artist( R.drawable.music, "neha kakkar", "Tu hi yaar mera" ), ItemType.ARTIST ) );
-        listViewItems.add( new ListViewItem( new Header( "Tracks" ), ItemType.HEADER ) );
-        listViewItems.add( new ListViewItem( new Track( R.drawable.music, "tu hi yaar mera", "neha kakkar" ), ItemType.TRACK ) );
-        listViewItems.add( new ListViewItem( new Track( R.drawable.song, "sawarne lage", "jubin" ), ItemType.TRACK ) );
-        listViewItems.add( new ListViewItem( new Track( R.drawable.music, "Jay ho", "A.R.Rehman" ), ItemType.TRACK ) );
-        listViewItems.add( new ListViewItem( new Header( "Albums" ), ItemType.HEADER ) );
-        listViewItems.add( new ListViewItem( new Album( R.drawable.song, "Classical songs", "A very selective collection of top tracks" ), ItemType.ALBUM ) );
-        listViewItems.add( new ListViewItem( new Album( R.drawable.music, "Malyalam songs", "Top tracks of various singers" ), ItemType.ALBUM ) );
-        listViewItems.add( new ListViewItem( new Album( R.drawable.music, "Bengali songs", "A very selective collection of of top tracks" ), ItemType.ALBUM ) );
+        listViewItems.add( new ListViewItem( new HeaderItem( "Artist" ), ItemType.HEADER ) );
+        listViewItems.add( new ListViewItem( new ArtistItem( R.drawable.music, "A.R.Rehman" ), ItemType.ARTIST ) );
+        listViewItems.add( new ListViewItem( new ArtistItem( R.drawable.song, "Jubin"), ItemType.ARTIST ) );
+        listViewItems.add( new ListViewItem( new ArtistItem( R.drawable.music, "neha kakkar" ), ItemType.ARTIST ) );
+        listViewItems.add( new ListViewItem( new HeaderItem( "Tracks" ), ItemType.HEADER ) );
+        listViewItems.add( new ListViewItem( new TrackItem( R.drawable.music, "tu hi yaar mera", "neha kakkar" ), ItemType.TRACK ) );
+        listViewItems.add( new ListViewItem( new TrackItem( R.drawable.song, "sawarne lage", "jubin" ), ItemType.TRACK ) );
+        listViewItems.add( new ListViewItem( new TrackItem( R.drawable.music, "Jay ho", "A.R.Rehman" ), ItemType.TRACK ) );
+        listViewItems.add( new ListViewItem( new HeaderItem( "Albums" ), ItemType.HEADER ) );
+        listViewItems.add( new ListViewItem( new AlbumItem( R.drawable.song, "Classical songs"), ItemType.ALBUM ) );
+        listViewItems.add( new ListViewItem( new AlbumItem( R.drawable.music, "Malyalam songs" ), ItemType.ALBUM ) );
+        listViewItems.add( new ListViewItem( new AlbumItem( R.drawable.music, "Bengali songs" ), ItemType.ALBUM ) );
 
     }
 }
